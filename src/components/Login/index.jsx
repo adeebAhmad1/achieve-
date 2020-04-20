@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 //firebase
 import firebase from "../../config/firebase";
-
+import { Toast } from "materialize-css"
 class Login extends Component {
   state = {
     email: "",
@@ -22,10 +22,11 @@ class Login extends Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => {
-        this.props.history.push("/");
+        this.props.history.push("/dashboard");
       })
       .catch((error) => {
         console.log(error);
+        new Toast({html: error.message,classes: "red"})
       });
   };
   onKeyUp = (e)=>{
@@ -46,7 +47,7 @@ class Login extends Component {
                 className="login100-form validate-form"
               >
                 <span className="login100-form-title">
-                  Welcome on EpicDL Log In
+                  Welcome on Achieve+ Log In
                 </span>
                 <div
                   className="wrap-input100 validate-input"

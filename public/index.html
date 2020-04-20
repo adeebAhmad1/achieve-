@@ -9,7 +9,10 @@
       name="description"
       content="Web site created using create-react-app"
     />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -26,8 +29,83 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <style>
+      .loader_wrapper{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: #fff;
+        z-index: 10;
+      }
+      .done{
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+      }
+      .loader {
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        padding: 0px;
+        opacity: 0.5;
+        border: 3px solid #57b846;
+        -webkit-animation: loader 1s ease-in-out infinite alternate;
+        animation: loader 1s ease-in-out infinite alternate;
+      }
+
+      .loader:before {
+        content: " ";
+        position: absolute;
+        z-index: -1;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        border: 3px solid #57b846;
+      }
+
+      .loader:after {
+        content: " ";
+        position: absolute;
+        z-index: -1;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        border: 3px solid #57b846;
+      }
+
+      @keyframes loader {
+        from {
+          transform: rotate(0deg) scale(1, 1);
+          border-radius: 0px;
+        }
+        to {
+          transform: rotate(360deg) scale(0, 0);
+          border-radius: 50px;
+        }
+      }
+      @-webkit-keyframes loader {
+        from {
+          -webkit-transform: rotate(0deg) scale(1, 1);
+          border-radius: 0px;
+        }
+        to {
+          -webkit-transform: rotate(360deg) scale(0, 0);
+          border-radius: 50px;
+        }
+      }
+    </style>
   </head>
   <body>
+    <div class="loader_wrapper">
+      <div class="loader"></div>
+    </div>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

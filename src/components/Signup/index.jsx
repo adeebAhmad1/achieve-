@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 //firebase
 import firebase, { db } from "../../config/firebase";
-import { Datepicker } from "materialize-css";
+import { Datepicker,Toast } from "materialize-css";
 class Signup extends Component {
   state = {
     email: "",
@@ -29,13 +29,13 @@ class Signup extends Component {
     e.preventDefault();
     clearInterval(window.interval)
     if (this.state.email === "") {
-      return alert("Please enter email.");
+      return new Toast({html:"Please enter email.",classes: "red"});
     }
     if (this.state.birthday === "") {
-      return alert("Please enter email.");
+      return new Toast({html: "Please Enter your birthday",classes: "red"});
     }
     if (this.state.password !== this.state.confirmPassword) {
-      return alert("You're password doesn't match.");
+      return new Toast({html: "You're password doesn't match.",classes: "red"});
     }
     firebase
       .auth()
@@ -57,7 +57,7 @@ class Signup extends Component {
         this.props.history.push("/dashboard");
       })
       .catch((error) => {
-        console.log(error);
+        new Toast({html: error.message,classes: "red"})
       });
   };
   onKeyUp = (e)=>{
