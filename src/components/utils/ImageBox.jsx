@@ -5,7 +5,7 @@ class ImageBox extends Component {
   static contextType = AuthContext;
   state = {
     user: {},
-    likes: 0,
+    likes: 0
   };
   componentDidMount() {
     this.setState({ likes: this.props.likes });
@@ -21,7 +21,6 @@ class ImageBox extends Component {
         const user = users.find((el) => el.uid === this.props.uid);
         this.setState({ user });
       });
-    console.log(this.props.likes);
     if (this.props.likes.includes(this.context.user.uid)) {
       this.refs.like.innerHTML = "favorite";
     }
@@ -30,7 +29,8 @@ class ImageBox extends Component {
     this.setState({ likes: props.likes });
   }
   render() {
-    const { text, image, likes, comments, id } = this.props;
+    const { text, image, likes, comments, id,date } = this.props;
+    console.log(this.props)
     return (
       <div className="f-card">
         <div className="header">
@@ -45,13 +45,14 @@ class ImageBox extends Component {
           </div>
           <div className="time">
             <a href="/" onClick={(e) => e.preventDefault()}>
-              2hrs
+              {new Date(date).toLocaleTimeString()}{" "}
+              {new Date(date).toDateString()}
             </a>{" "}
             · <i className="fa fa-globe"></i>
           </div>
         </div>
         <div className="content">
-          <p>{this.props.text}</p>
+          <p>{text}</p>
         </div>
 
         <div className="reference">
@@ -95,7 +96,8 @@ class ImageBox extends Component {
               </i>
               Like
             </span>
-            <span onClick={()=> this.props.history.push(`/home/${id}/comments`)}
+            <span
+              onClick={() => this.props.history.push(`/home/${id}/comments`)}
               onMouseEnter={() => {
                 const { comment } = this.refs;
                 comment.innerHTML = "chat";
@@ -105,14 +107,17 @@ class ImageBox extends Component {
                 comment.innerHTML = "chat_bubble_outline";
               }}
             >
-              {/* chat */}
               <i className="material-icons" ref="comment">
                 chat_bubble_outline
               </i>
               Comment
             </span>
-            <span>
-              <i className="material-icons">share</i>Share
+            <span onClick={()=>{
+              db.collection("posts").doc(id).delete().then(()=>{
+                console.log("Deleted")
+              })
+            }}>
+              <i className="material-icons">delete</i>Delete
             </span>
           </div>
         </div>

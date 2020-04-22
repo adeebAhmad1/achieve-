@@ -25,21 +25,6 @@ class PostingBox extends Component {
               />
             </div>
           </div>
-          <hr />
-          <div className="row iconRow" style={{ marginBottom: `0` }}>
-            <div className="input-field iconBox col s4 m4 l4">
-              <span className="material-icons icon">video_call</span>{" "}
-              <p className="iconText">Live</p>{" "}
-            </div>
-            <div className="input-field iconBox col s4 m4 l4">
-              <span className="material-icons icon">photo_album</span>
-              <p className="iconText">Photo</p>{" "}
-            </div>
-            <div className="input-field iconBox col s4 m4 l4">
-              <span className="material-icons icon">location_on</span>
-              <p className="iconText">ChekIn</p>
-            </div>
-          </div>
         </div>
       </div>
     );

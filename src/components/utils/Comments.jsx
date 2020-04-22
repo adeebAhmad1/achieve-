@@ -11,18 +11,29 @@ class Comments extends Component {
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
+  closePostWindow = () => {
+    this.props.history.push("/");
+  };
   render() {
     return (
       <DataContext.Consumer>
         {(state) => {
           const post = state.posts.find(post=> post.id === this.props.match.params.postId);
-          console.log(post)
           return state.loading ? (
             <div className="loading_wrapper">
               <div className="loader"></div>
             </div>
           ) : (
             <div className="new-post-outer">
+              <div
+                style={{
+                  width: `100%`,
+                  height: `100%`,
+                  position: `absolute`,
+                  zIndex: `-1`,
+                }}
+                onClick={this.closePostWindow}
+              ></div>
               <div className="new-post-inner">
                 <div className="outer_box">
                   <div className="heading_wrapper">

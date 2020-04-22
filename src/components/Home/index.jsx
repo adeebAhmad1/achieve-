@@ -21,14 +21,16 @@ class Home extends Component {
     return (
       <DataContext.Consumer>
         {(state)=>{
+          state.posts.sort((a,b)=> b-a)
           return state.loading ? <div className="loader_wrapper">
             <div className="loader"></div>
-          </div> : 
+          </div> :
           <div>
+            <h1>Archieve+</h1>
             <PostingBox history={this.props.history} />
             {state.posts.map((el,i) => {
-              const { text, comments, likes, uid,image,id } = el;
-              return (<ImageBox history={this.props.history} text={text} comments={comments} id={id} likes={likes} uid={uid} image={image} key={i} />)
+              const { text, comments, likes, uid,image,id,date } = el;
+              return (<ImageBox history={this.props.history} text={text} date={date} comments={comments} id={id} likes={likes} uid={uid} image={image} key={i} />)
             })}
           </div>
         }}

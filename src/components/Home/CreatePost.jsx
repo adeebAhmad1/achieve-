@@ -18,33 +18,40 @@ class CreatePost extends Component {
     this.setState({ loading: true });
     if (file) {
       storageRef
-        .child(`images/${file.name}`)
+        .child(`Images/${file.name}`)
         .put(file)
         .then((snapshot) => {
           snapshot.ref.getDownloadURL().then((image) => {
-            db.collection("posts").add({
-              image,
-              uid: this.context.user.uid,
-              text: post,
-              comments: [],
-              likes: [],
-            }).then(()=>{
-              this.closePostWindow()
-            });
+            db.collection("posts")
+              .add({
+                image,
+                uid: this.context.user.uid,
+                text: post,
+                comments: [],
+                likes: [],
+                date: Date.now()
+              })
+              .then(() => {
+                this.setState({ loading: false });
+                this.closePostWindow();
+              });
           });
         })
         .catch((e) => {
           console.log(e);
         });
     } else {
-      db.collection("posts").add({
-        uid: this.context.user.uid,
-        text: post,
-        comments: [],
-        likes: [],
-      }).then(()=>{
-        this.closePostWindow()
-      });
+      db.collection("posts")
+        .add({
+          uid: this.context.user.uid,
+          text: post,
+          comments: [],
+          likes: [],
+          date: Date.now()
+        })
+        .then(() => {
+          this.closePostWindow();
+        });
     }
   };
   componentDidMount() {
@@ -107,43 +114,49 @@ class CreatePost extends Component {
                   />
                   <span className="user_name"> {user.name} </span>
                 </div>
-                <form onSubmit={this.onSubmit}>
-                  <div className="posting_box">
-                    <textarea
-                      name="post"
-                      onChange={this.handleChange}
-                      value={this.state.post}
-                      className="posting_input browser-default"
-                      placeholder="What's on your mind?"
-                    ></textarea>
+                {this.state.loading ? (
+                  <div className="loading_wrapper">
+                    <div className="loader"></div>
                   </div>
-                  <div className="posting_button_wrapper">
-                    <button
-                      disabled={this.state.file ? false : !this.state.post}
-                    >
-                      Post
-                    </button>
-                  </div>
-                  <div className="line"></div>
-                  <div className="right" style={{ marginRight: `30px` }}>
-                    {" "}
-                    <input
-                      accept="image/*"
-                      onChange={this.handleFileSelection}
-                      type="file"
-                      style={{ display: `none` }}
-                      id="file"
-                    />{" "}
-                    <label
-                      htmlFor="file"
-                      style={{ cursor: `pointer` }}
-                      className="material-icons"
-                    >
-                      photo_library
-                    </label>
-                  </div>
-                  <div className="line"></div>
-                </form>
+                ) : (
+                  <form onSubmit={this.onSubmit}>
+                    <div className="posting_box">
+                      <textarea
+                        name="post"
+                        onChange={this.handleChange}
+                        value={this.state.post}
+                        className="posting_input browser-default"
+                        placeholder="What's on your mind?"
+                      ></textarea>
+                    </div>
+                    <div className="posting_button_wrapper">
+                      <button
+                        disabled={this.state.file ? false : !this.state.post}
+                      >
+                        Post
+                      </button>
+                    </div>
+                    <div className="line"></div>
+                    <div className="right" style={{ marginRight: `30px` }}>
+                      {" "}
+                      <input
+                        accept="image/*"
+                        onChange={this.handleFileSelection}
+                        type="file"
+                        style={{ display: `none` }}
+                        id="file"
+                      />{" "}
+                      <label
+                        htmlFor="file"
+                        style={{ cursor: `pointer` }}
+                        className="material-icons"
+                      >
+                        photo_library
+                      </label>
+                    </div>
+                    <div className="line"></div>
+                  </form>
+                )}
               </div>
             </div>
           );
