@@ -3,6 +3,7 @@ import { db } from "../../config/firebase";
 import { AuthContext } from "../../context/AuthContext";
 import firebase from "../../config/firebase";
 import { Toast } from "materialize-css";
+import { Link } from "react-router-dom";
 class Dashboard extends Component {
   state = {
     user: {},
@@ -29,7 +30,7 @@ class Dashboard extends Component {
       <div className="container ">
         <button
           style={{ marginTop: "5px" }}
-          className="left waves-effect waves-green btn"
+          className="left green white-text waves-effect waves-green btn"
           onClick={() => {
             firebase.auth().signOut().then(()=>{
               this.props.history.push("/login")
@@ -38,12 +39,13 @@ class Dashboard extends Component {
         >
           Logout
         </button>
+        <Link to="/" className="left  green white-text waves-effect waves-green btn">Home</Link>
         <div className="styles">
-          <ul class="collection with-header ">
-            <li class="collection-header">
+          <ul className="collection with-header ">
+            <li className="collection-header">
               <h4 className="center">Personal Details</h4>
             </li>
-            <li class="collection-item">
+            <li className="collection-item">
               <div>
                 Email{" "}
                 <span className={`secondary-content ${this.context.user.emailVerified ? "green-text" : "red-text"}`}>
@@ -62,7 +64,7 @@ class Dashboard extends Component {
                 
               </div>
             </li>
-            <li class="collection-item">
+            <li className="collection-item">
               <div>
                 Username{" "}
                 <span className="secondary-content">
@@ -70,7 +72,7 @@ class Dashboard extends Component {
                 </span>
               </div>
             </li>
-            <li class="collection-item">
+            <li className="collection-item">
               <div>
                 Birthday{" "}
                 <span className="secondary-content">
