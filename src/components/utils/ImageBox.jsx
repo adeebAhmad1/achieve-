@@ -29,8 +29,7 @@ class ImageBox extends Component {
     this.setState({ likes: props.likes });
   }
   render() {
-    const { text, image, likes, comments, id,date } = this.props;
-    console.log(this.props)
+    const { text, image, likes, comments, id,date ,uid,video} = this.props;
     return (
       <div className="f-card">
         <div className="header">
@@ -57,6 +56,7 @@ class ImageBox extends Component {
 
         <div className="reference">
           {image ? <img className="reference-thumb" src={image} /> : ""}
+          {video ? <video style={{width: `100%`}} src={video} controls={true}></video> : ""}
         </div>
         <span className="line" style={{ height: `1px` }}></span>
         <div className="" style={{ marginBottom: `30px` }}>
@@ -112,13 +112,13 @@ class ImageBox extends Component {
               </i>
               Comment
             </span>
-            <span onClick={()=>{
+            {this.context.user.uid === uid ? <span onClick={()=>{
               db.collection("posts").doc(id).delete().then(()=>{
                 console.log("Deleted")
               })
             }}>
               <i className="material-icons">delete</i>Delete
-            </span>
+            </span> : ""}
           </div>
         </div>
       </div>

@@ -8,13 +8,15 @@ class CreatePost extends Component {
     post: "",
     file: null,
     loading: false,
+    fileURL: null,
+    video: null
   };
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
   onSubmit = (e) => {
     e.preventDefault();
-    const { file, post } = this.state;
+    const { file, post,video } = this.state;
     this.setState({ loading: true });
     if (file) {
       storageRef
@@ -40,7 +42,32 @@ class CreatePost extends Component {
         .catch((e) => {
           console.log(e);
         });
-    } else {
+    } else if(video){
+      storageRef
+        .child(`Videos/${video.name}`)
+        .put(video)
+        .then((snapshot) => {
+          snapshot.ref.getDownloadURL().then((video) => {
+            db.collection("posts")
+              .add({
+                video,
+                uid: this.context.user.uid,
+                text: post,
+                comments: [],
+                likes: [],
+                date: Date.now()
+              })
+              .then(() => {
+                this.setState({ loading: false });
+                this.closePostWindow();
+              });
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+     else {
       db.collection("posts")
         .add({
           uid: this.context.user.uid,
@@ -64,13 +91,22 @@ class CreatePost extends Component {
   closePostWindow = () => {
     this.props.history.push("/");
   };
-  handleFileSelection = (event) => {
-    const files = event.target.files;
+  handleFileSelection = (e) => {
+    const files = e.target.files;
     if (files.length < 1) {
-      return this.setState({ fileURL: null });
+      return this.setState({ [e.target.name]: null });
     }
-    const file = event.target.files[0];
-    this.setState({ file });
+    const file = e.target.files[0];
+    console.log(files)
+    this.setState({ [e.target.name] : file });
+    if(e.target.name === "file"){
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      setTimeout(() => {
+        this.setState({fileURL: fileReader.result})
+        console.log(fileReader)
+      }, 100);
+    }
   };
   render() {
     return this.context.isAuth ? (
@@ -80,7 +116,7 @@ class CreatePost extends Component {
             (el) => el.uid === this.context.user.uid
           );
           return state.loading ? (
-            <div className="loading_wrapper">
+            <div className="loader_wrapper">
               <div className="loader"></div>
             </div>
           ) : (
@@ -115,7 +151,7 @@ class CreatePost extends Component {
                   <span className="user_name"> {user.name} </span>
                 </div>
                 {this.state.loading ? (
-                  <div className="loading_wrapper">
+                  <div className="loader_wrapper">
                     <div className="loader"></div>
                   </div>
                 ) : (
@@ -129,12 +165,11 @@ class CreatePost extends Component {
                         placeholder="What's on your mind?"
                       ></textarea>
                     </div>
+                    {this.state.fileURL ? <div className="image_wrapper">
+                      <img src={this.state.fileURL} alt="ABC" width="100" style={{borderRadius: 0}} />
+                    </div> : ""}
                     <div className="posting_button_wrapper">
-                      <button
-                        disabled={this.state.file ? false : !this.state.post}
-                      >
-                        Post
-                      </button>
+                      <button disabled={this.state.video? false : this.state.file ? false : !this.state.post}>Post</button>
                     </div>
                     <div className="line"></div>
                     <div className="right" style={{ marginRight: `30px` }}>
@@ -143,6 +178,7 @@ class CreatePost extends Component {
                         accept="image/*"
                         onChange={this.handleFileSelection}
                         type="file"
+                        name="file"
                         style={{ display: `none` }}
                         id="file"
                       />{" "}
@@ -154,6 +190,24 @@ class CreatePost extends Component {
                         photo_library
                       </label>
                     </div>
+                    <div className="right" style={{ marginRight: `30px` }}>
+                      {" "}
+                      <input
+                        accept="video/*"
+                        name="video"
+                        onChange={this.handleFileSelection}
+                        type="file"
+                        style={{ display: `none` }}
+                        id="file2"
+                      />{" "}
+                      <label
+                        htmlFor="file2"
+                        style={{ cursor: `pointer` }}
+                        className="material-icons"
+                      >
+                        videocam
+                      </label>
+                    </div>
                     <div className="line"></div>
                   </form>
                 )}
@@ -163,7 +217,7 @@ class CreatePost extends Component {
         }}
       </DataContext.Consumer>
     ) : (
-      <div className="loading_wrapper">
+      <div className="loader_wrapper">
         <div className="loader"></div>
       </div>
     );

@@ -3,6 +3,9 @@ import PostingBox from "../utils/PostingBox";
 import { AuthContext } from "../../context/AuthContext";
 import React, { Component } from "react";
 import { DataContext } from "../../context/DataContext"
+import { Link } from "react-router-dom";
+import Footer from "../Layout/Footer";
+import Header from "../Layout/Header";
 class Home extends Component {
   static contextType = AuthContext
   state={
@@ -18,20 +21,22 @@ class Home extends Component {
   }
   
   render() {
+    const links = [{text: "Profile", link: "/dashboard"},{text: "Logout", link: "/login"}]
     return (
       <DataContext.Consumer>
         {(state)=>{
-          state.posts.sort((a,b)=> b-a)
+          state.posts.sort((a,b)=> b.date-a.date)
           return state.loading ? <div className="loader_wrapper">
             <div className="loader"></div>
           </div> :
           <div>
-            <h1>Archieve+</h1>
+            <Header links={links} history={this.props.history}/>
             <PostingBox history={this.props.history} />
             {state.posts.map((el,i) => {
-              const { text, comments, likes, uid,image,id,date } = el;
-              return (<ImageBox history={this.props.history} text={text} date={date} comments={comments} id={id} likes={likes} uid={uid} image={image} key={i} />)
+              const { text, comments, likes, uid,image,id,date,video } = el;
+              return (<ImageBox history={this.props.history} text={text} video={video} date={date} comments={comments} id={id} likes={likes} uid={uid} image={image} key={i} />)
             })}
+            <Footer links={links} />
           </div>
         }}
       </DataContext.Consumer>

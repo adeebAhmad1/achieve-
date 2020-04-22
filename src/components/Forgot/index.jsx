@@ -12,6 +12,7 @@ class Forgot extends Component {
   state = {
     email: "",
     sent: false,
+    loading: false,
   };
 
   handleChange = (event) => {
@@ -20,16 +21,19 @@ class Forgot extends Component {
 
   handleEmail = (e) => {
     e.preventDefault();
+    this.setState({ loading: true });
     firebase
       .auth()
       .sendPasswordResetEmail(this.state.email)
       .then(() => {
         new Toast({
-          html: "A reset email has been sent to your email.Check Your email",classes: "green"
+          html: "A reset email has been sent to your email.Check Your email",
+          classes: "green",
         });
-        this.setState({ sent: true });
+        this.setState({ sent: true, loading: false });
       })
       .catch((error) => {
+        this.setState({ loading: false });
         new Toast({ html: error.message, classes: "red" });
       });
   };
@@ -39,7 +43,11 @@ class Forgot extends Component {
       : e.target.classList.remove("has-val");
   };
   render() {
-    return (
+    return this.state.loading ? (
+      <div className="loader_wrapper">
+        <div className="loader"></div>
+      </div>
+    ) : (
       <div>
         <div className="container text-center">
           <div className="col-md-12"></div>

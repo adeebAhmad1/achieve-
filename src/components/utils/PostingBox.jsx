@@ -7,7 +7,7 @@ class PostingBox extends Component {
   render() {
     return (
       <div>
-        <div className="fbComponent" style={{width: `40%`,margin: `0 auto`,border: `1px solid #777`,paddingTop: `20px`}}>
+        <div className="fbComponent" style={{width: `40%`,margin: `20px auto`,border: `1px solid #777`,paddingTop: `20px`}}>
           <div className="row">
             <div className="col s10 m7 l7">
               <input

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 //firebase
 import firebase, { db } from "../../config/firebase";
-import { Datepicker,Toast } from "materialize-css";
+import { Datepicker, Toast } from "materialize-css";
 class Signup extends Component {
   state = {
     email: "",
@@ -13,13 +13,19 @@ class Signup extends Component {
     password: "",
     confirmPassword: "",
     birthday: "",
+    loading: false
   };
   componentDidMount() {
-    Datepicker.init(document.querySelectorAll('.datepicker'), { yearRange: [1900,2020] });
-    window.interval = setInterval(()=>{this.setState({birthday: document.querySelector('.datepicker').value });console.log(this.state.birthday)},1000)
+    Datepicker.init(document.querySelectorAll(".datepicker"), {
+      yearRange: [1900, 2020],defaultDate: new Date("07/07/2001")
+    });
+    window.interval = setInterval(() => {
+      this.setState({ birthday: document.querySelector(".datepicker").value });
+      console.log(this.state.birthday);
+    }, 1000);
   }
-  componentWillUnmount(){
-    clearInterval(window.interval)
+  componentWillUnmount() {
+    clearInterval(window.interval);
   }
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
@@ -27,26 +33,30 @@ class Signup extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    clearInterval(window.interval)
+    clearInterval(window.interval);
     if (this.state.email === "") {
-      return new Toast({html:"Please enter email.",classes: "red"});
+      return new Toast({ html: "Please enter email.", classes: "red" });
     }
     if (this.state.birthday === "") {
-      return new Toast({html: "Please Enter your birthday",classes: "red"});
+      return new Toast({ html: "Please Enter your birthday", classes: "red" });
     }
     if (this.state.password !== this.state.confirmPassword) {
-      return new Toast({html: "You're password doesn't match.",classes: "red"});
+      return new Toast({
+        html: "You're password doesn't match.",
+        classes: "red",
+      });
     }
+    this.setState({loading: true})
     firebase
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(({ user: { uid } }) => {
-        const { name,birthday } = this.state;
+        const { name, birthday } = this.state;
         db.collection("users")
           .add({
             uid,
             name,
-            birthday
+            birthday,
           })
           .then((docRef) => {
             console.log("Document written with ID: ", docRef.id);
@@ -57,19 +67,25 @@ class Signup extends Component {
         this.props.history.push("/dashboard");
       })
       .catch((error) => {
-        new Toast({html: error.message,classes: "red"})
+        this.setState({loading: false})
+        new Toast({ html: error.message, classes: "red" });
       });
   };
-  onKeyUp = (e)=>{
-    e.target.value.length > 0 ? e.target.classList.add("has-val") : e.target.classList.remove("has-val")
-  }
+  onKeyUp = (e) => {
+    e.target.value.length > 0
+      ? e.target.classList.add("has-val")
+      : e.target.classList.remove("has-val");
+  };
   render() {
-    return (
+    return this.state.loading ? (
+      <div className="loader_wrapper">
+        <div className="loader"></div>
+      </div>
+    ) : (
       <div>
         <div className="container text-center">
           <div className="col l12"></div>
         </div>
-
         <div className="limiter">
           <div className="container-login100">
             <div className="wrap-login100 p-t-50 p-b-20">
@@ -109,7 +125,8 @@ class Signup extends Component {
                       className="wrap-input100 validate-input m-t-40 m-b-35"
                       data-validate="Enter username"
                     >
-                      <input onKeyUp={this.onKeyUp}
+                      <input
+                        onKeyUp={this.onKeyUp}
                         type="email"
                         name="email"
                         maxLength="255"
@@ -132,7 +149,8 @@ class Signup extends Component {
                       className="wrap-input100 validate-input m-t-40 m-b-35"
                       data-validate="Enter username"
                     >
-                      <input onKeyUp={this.onKeyUp}
+                      <input
+                        onKeyUp={this.onKeyUp}
                         type="password"
                         name="password"
                         className="input100 browser-default"
@@ -152,7 +170,8 @@ class Signup extends Component {
                       className="wrap-input100 validate-input m-t-40 m-b-35"
                       data-validate="Enter username"
                     >
-                      <input onKeyUp={this.onKeyUp}
+                      <input
+                        onKeyUp={this.onKeyUp}
                         type="password"
                         name="confirmPassword"
                         className="input100 browser-default"
@@ -172,10 +191,17 @@ class Signup extends Component {
                       className="wrap-input100 validate-input m-t-40 m-b-35 "
                       data-validate="Enter username"
                     >
-                      <input onChange={this.onKeyUp}
+                      <input
+                        onChange={this.onKeyUp}
                         type="text"
-                        onFocus={(e)=>{
-                          document.querySelector(".datepicker-done").addEventListener("click",()=> document.querySelector('.datepicker').classList.add("has-val"))
+                        onFocus={(e) => {
+                          document
+                            .querySelector(".datepicker-done")
+                            .addEventListener("click", () =>
+                              document
+                                .querySelector(".datepicker")
+                                .classList.add("has-val")
+                            );
                         }}
                         name="birthday"
                         value={this.state.birthday}

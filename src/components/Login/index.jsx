@@ -3,21 +3,23 @@ import { Link } from "react-router-dom";
 
 //firebase
 import firebase from "../../config/firebase";
-import { Toast } from "materialize-css"
+import { Toast } from "materialize-css";
 class Login extends Component {
   state = {
     email: "",
     password: "",
+    loading: false,
   };
 
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
-  componentDidMount(){
-    firebase.auth().signOut()
+  componentDidMount() {
+    firebase.auth().signOut();
   }
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({ loading: true });
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
@@ -25,22 +27,28 @@ class Login extends Component {
         this.props.history.push("/dashboard");
       })
       .catch((error) => {
-        console.log(error);
-        new Toast({html: error.message,classes: "red"})
+        this.setState({ loading: false });
+        new Toast({ html: error.message, classes: "red" });
       });
   };
-  onKeyUp = (e)=>{
-    e.target.value.length > 0 ? e.target.classList.add("has-val") : e.target.classList.remove("has-val")
-  }
+  onKeyUp = (e) => {
+    e.target.value.length > 0
+      ? e.target.classList.add("has-val")
+      : e.target.classList.remove("has-val");
+  };
   render() {
-    return (
+    return this.state.loading ? (
+      <div className="loader_wrapper" style={{width: `100%`}}>
+        <div className="loader"></div>
+      </div>
+    ) : (
       <div>
         <div className="container row">
           <div className="col s6"></div>
         </div>
         <div className="limiter">
           <div className="container-login100">
-            <div className="wrap-login100" style={{maxWidth: `400px`}}>
+            <div className="wrap-login100" style={{ maxWidth: `400px` }}>
               <form
                 onSubmit={this.handleSubmit}
                 method="POST"

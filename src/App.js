@@ -22,6 +22,7 @@ function App() {
       <AuthContextProvider>
         <BrowserRouter>
           <div className="App">
+            
             <Route path="/home" component={Home}/>
             <Route path="/home/:postId/comments" component={Comments} />
             <Route exact path="/home/createPost" component={CreatePost} />
