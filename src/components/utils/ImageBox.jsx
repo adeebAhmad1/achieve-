@@ -5,7 +5,7 @@ class ImageBox extends Component {
   static contextType = AuthContext;
   state = {
     user: {},
-    likes: 0
+    likes: 0,
   };
   componentDidMount() {
     this.setState({ likes: this.props.likes });
@@ -29,14 +29,20 @@ class ImageBox extends Component {
     this.setState({ likes: props.likes });
   }
   render() {
-    const { text, image, likes, comments, id,date ,uid,video} = this.props;
+    const { text, image, likes, comments, id, date, uid, video } = this.props;
     return (
       <div className="f-card">
         <div className="header">
           <div className="options">
             <i className="fa fa-chevron-down"></i>
           </div>
-          <img className="co-logo" src="http://placehold.it/40x40" />
+          <img
+            className="co-logo"
+            src={
+              this.state.user.image ||
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+            }
+          />
           <div className="co-name">
             <a href="/" onClick={(e) => e.preventDefault()}>
               {this.state.user.name}
@@ -56,7 +62,15 @@ class ImageBox extends Component {
 
         <div className="reference">
           {image ? <img className="reference-thumb" src={image} /> : ""}
-          {video ? <video style={{width: `100%`}} src={video} controls={true}></video> : ""}
+          {video ? (
+            <video
+              style={{ width: `100%` }}
+              src={video}
+              controls={true}
+            ></video>
+          ) : (
+            ""
+          )}
         </div>
         <span className="line" style={{ height: `1px` }}></span>
         <div className="" style={{ marginBottom: `30px` }}>
@@ -112,13 +126,22 @@ class ImageBox extends Component {
               </i>
               Comment
             </span>
-            {this.context.user.uid === uid ? <span onClick={()=>{
-              db.collection("posts").doc(id).delete().then(()=>{
-                console.log("Deleted")
-              })
-            }}>
-              <i className="material-icons">delete</i>Delete
-            </span> : ""}
+            {this.context.user.uid === uid ? (
+              <span
+                onClick={() => {
+                  db.collection("posts")
+                    .doc(id)
+                    .delete()
+                    .then(() => {
+                      console.log("Deleted");
+                    });
+                }}
+              >
+                <i className="material-icons">delete</i>Delete
+              </span>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

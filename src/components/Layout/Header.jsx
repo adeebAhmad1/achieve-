@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SideDrawer from "./SideDrawer";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   render() {
@@ -21,9 +22,9 @@ class Header extends Component {
         </a>
         <nav className="green" style={{padding: `20px 0`,boxSizing: `content-box`}}>
           <div class="nav-wrapper">
-            <a href="#" class="brand-logo" style={{ marginLeft: `50px` }}>
-              Achieve +
-            </a>
+            <Link to="/" class="brand-logo" style={{ marginLeft: `50px` }}>
+            Acheve Church  Plus
+            </Link>
           </div>
         </nav>
       </div>

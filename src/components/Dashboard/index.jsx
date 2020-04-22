@@ -28,12 +28,23 @@ class Dashboard extends Component {
       });
   }
   render() {
-    const links = [{ text: "Home", link: "/" },{ text: "Logout", link: "/login" },]
+    const links = [
+      { text: "Home", link: "/" },
+      { text: "Logout", link: "/login" },
+    ];
     return this.context.isAuth ? (
       <div className="" style={{ height: `100vh` }}>
         <Header links={links} history={this.props.history} />
         <div className="container outer">
           <div className="styles">
+            <div className="avatar-upload">
+              <div class="avatar-preview">
+                <div
+                  id="imagePreview"
+                  style={{ backgroundImage: `url(${this.state.user.image})` }}
+                ></div>
+              </div>
+            </div>
             <ul className="collection with-header ">
               <li className="collection-header">
                 <h4 className="center">Personal Details</h4>
@@ -72,7 +83,9 @@ class Dashboard extends Component {
                             });
                         }}
                         className="red white-text"
-                      > &nbsp;Verify
+                      >
+                        {" "}
+                        &nbsp;Verify
                       </button>
                     )}
                   </span>
@@ -97,9 +110,7 @@ class Dashboard extends Component {
             </ul>
           </div>
         </div>
-        <Footer
-          links={links}
-        />
+        <Footer links={links} />
       </div>
     ) : (
       <div className=""></div>

@@ -11,6 +11,7 @@ import Home from "./components/Home";
 import CreatePost from "./components/Home/CreatePost";
 import Comments from "./components/utils/Comments";
 import DataContextProvider from "./context/DataContext";
+import UploadImage from "./components/Signup/UploadImage";
 function App() {
   useEffect(() => {
     window.addEventListener("load", () =>
@@ -29,6 +30,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
+            <Route exact path="/addpicture" component={UploadImage} />
             <Route exact path="/forgot" component={Forgot} />
             <Route exact path="/dashboard" component={Dashboard} />
           </div>

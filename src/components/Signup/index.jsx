@@ -64,7 +64,7 @@ class Signup extends Component {
           .catch((error) => {
             console.error("Error adding document: ", error);
           });
-        this.props.history.push("/dashboard");
+        this.props.history.push("/addpicture");
       })
       .catch((error) => {
         this.setState({loading: false})
@@ -95,7 +95,7 @@ class Signup extends Component {
                 className="login100-form validate-form"
               >
                 <span className="login100-form-title p-b-70">
-                  Welcome on Achieve+ Sign Up
+                  Welcome on Acheve Church  Plus Sign Up
                 </span>
                 <div className="row p-t-0">
                   <div className="col l6 s12">

@@ -9,14 +9,14 @@ class CreatePost extends Component {
     file: null,
     loading: false,
     fileURL: null,
-    video: null
+    video: null,
   };
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
   onSubmit = (e) => {
     e.preventDefault();
-    const { file, post,video } = this.state;
+    const { file, post, video } = this.state;
     this.setState({ loading: true });
     if (file) {
       storageRef
@@ -31,7 +31,7 @@ class CreatePost extends Component {
                 text: post,
                 comments: [],
                 likes: [],
-                date: Date.now()
+                date: Date.now(),
               })
               .then(() => {
                 this.setState({ loading: false });
@@ -42,7 +42,7 @@ class CreatePost extends Component {
         .catch((e) => {
           console.log(e);
         });
-    } else if(video){
+    } else if (video) {
       storageRef
         .child(`Videos/${video.name}`)
         .put(video)
@@ -55,7 +55,7 @@ class CreatePost extends Component {
                 text: post,
                 comments: [],
                 likes: [],
-                date: Date.now()
+                date: Date.now(),
               })
               .then(() => {
                 this.setState({ loading: false });
@@ -66,15 +66,14 @@ class CreatePost extends Component {
         .catch((e) => {
           console.log(e);
         });
-    }
-     else {
+    } else {
       db.collection("posts")
         .add({
           uid: this.context.user.uid,
           text: post,
           comments: [],
           likes: [],
-          date: Date.now()
+          date: Date.now(),
         })
         .then(() => {
           this.closePostWindow();
@@ -97,14 +96,14 @@ class CreatePost extends Component {
       return this.setState({ [e.target.name]: null });
     }
     const file = e.target.files[0];
-    console.log(files)
-    this.setState({ [e.target.name] : file });
-    if(e.target.name === "file"){
+    console.log(files);
+    this.setState({ [e.target.name]: file });
+    if (e.target.name === "file") {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       setTimeout(() => {
-        this.setState({fileURL: fileReader.result})
-        console.log(fileReader)
+        this.setState({ fileURL: fileReader.result });
+        console.log(fileReader);
       }, 100);
     }
   };
@@ -143,7 +142,10 @@ class CreatePost extends Component {
                 <span className="line"></span>
                 <div className="user">
                   <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+                    src={
+                      user.image ||
+                      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+                    }
                     alt=""
                     width="45"
                     height="45"
@@ -165,11 +167,30 @@ class CreatePost extends Component {
                         placeholder="What's on your mind?"
                       ></textarea>
                     </div>
-                    {this.state.fileURL ? <div className="image_wrapper">
-                      <img src={this.state.fileURL} alt="ABC" width="100" style={{borderRadius: 0}} />
-                    </div> : ""}
+                    {this.state.fileURL ? (
+                      <div className="image_wrapper">
+                        <img
+                          src={this.state.fileURL}
+                          alt="ABC"
+                          width="100"
+                          style={{ borderRadius: 0 }}
+                        />
+                      </div>
+                    ) : (
+                      ""
+                    )}
                     <div className="posting_button_wrapper">
-                      <button disabled={this.state.video? false : this.state.file ? false : !this.state.post}>Post</button>
+                      <button
+                        disabled={
+                          this.state.video
+                            ? false
+                            : this.state.file
+                            ? false
+                            : !this.state.post
+                        }
+                      >
+                        Post
+                      </button>
                     </div>
                     <div className="line"></div>
                     <div className="right" style={{ marginRight: `30px` }}>

@@ -59,7 +59,7 @@ class Comments extends Component {
                           <div className="single_comment_wrapper" style={{paddingBottom: `20px`}}>
                             <div className="user_wrapper" key={i}>
                             <img
-                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+                              src={user.image || "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"  }
                               className="user_image"
                               width="35"
                               height="35"

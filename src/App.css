@@ -433,7 +433,7 @@ iframe {
 .co-logo {
   float: left;
   margin-right: 8px;
-
+  border-radius: 50%;
   width: 40px;
   height: 40px;
 }
@@ -716,7 +716,7 @@ input[type=text]:not(.browser-default):focus:not([readonly]){
   color: #fff;
   border-radius: 10rem;
 }
-.posting_button_wrapper button:disabled{
+.posting_button_wrapper button:disabled,.login100-form-btn:disabled{
   background-color: #888;
   color: #aaa;
 }
@@ -790,4 +790,69 @@ input[type=text]:not(.browser-default):focus:not([readonly]){
 .outer_box{
   width: 95%;
   margin: 0 auto;
+}
+.uploadImage{
+  font-family: Poppins !important;
+}
+.uploadImage h1 {
+  font-size: 30px;
+  text-align: center;
+  margin: 20px 0 20px;
+}
+.uploadImage h1 small {
+  display: block;
+  font-size: 25px;
+  padding-top: 8px;
+  color: gray;
+  margin-top: 30px;
+}
+.avatar-upload {
+  position: relative;
+  max-width: 205px;
+  margin: 100px auto 50px;
+  transform: scale(1.3);
+}
+.avatar-upload .avatar-edit {
+  position: absolute;
+  right: 12px;
+  z-index: 1;
+  top: 10px;
+}
+.avatar-upload .avatar-edit input {
+  display: none;
+}
+.avatar-upload .avatar-edit input + label {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 0;
+  border-radius: 100%;
+  background: #ffffff;
+  padding-top: 4px;
+  padding-left: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  font-weight: normal;
+  transition: all 0.2s ease-in-out;
+}
+.avatar-upload .avatar-edit input + label:hover {
+  background: #f1f1f1;
+  border-color: #d6d6d6;
+}
+.avatar-upload .avatar-preview {
+  width: 192px;
+  height: 192px;
+  position: relative;
+  border-radius: 100%;
+  border: 6px solid #f8f8f8;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+}
+.avatar-upload .avatar-preview > div {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }

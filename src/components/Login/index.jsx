@@ -24,7 +24,7 @@ class Login extends Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => {
-        this.props.history.push("/dashboard");
+        this.props.history.push("/");
       })
       .catch((error) => {
         this.setState({ loading: false });
@@ -55,7 +55,7 @@ class Login extends Component {
                 className="login100-form validate-form"
               >
                 <span className="login100-form-title">
-                  Welcome on Achieve+ Log In
+                  Welcome on Acheve Church  Plus Log In
                 </span>
                 <div
                   className="wrap-input100 validate-input"

@@ -8,7 +8,7 @@ class DataContextProvider extends Component {
     loading: true
   }
   componentDidMount(){
-    db.collection("users").get().then(snapShot=>{
+    db.collection("users").onSnapshot(snapShot=>{
       const users = []
       snapShot.forEach(doc=>{
         const user = doc.data();

@@ -33,7 +33,7 @@ const SideDrawer = (props) => {
   };
   return (
     <ul id="slide-out" className="sidenav">
-      <li><Link to="" onClick={(e)=> e.preventDefault()} className="waves-effect" style={{fontSize: `2rem`,height: `5rem`,paddingTop: `10px`}}>Achieve +</Link></li>
+      <li><Link to="" onClick={(e)=> e.preventDefault()} className="waves-effect" style={{fontSize: `2rem`,height: `5rem`,paddingTop: `10px`}}>Acheve Church +</Link></li>
       {showLinks()}
     </ul>
   );
