@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Component } from 'react';
 import "./App.css";
 import { Route, BrowserRouter } from "react-router-dom";
 import Login from "./components/Login/index";
@@ -12,18 +12,17 @@ import CreatePost from "./components/Home/CreatePost";
 import Comments from "./components/utils/Comments";
 import DataContextProvider from "./context/DataContext";
 import UploadImage from "./components/Signup/UploadImage";
-function App() {
-  useEffect(() => {
-    window.addEventListener("load", () =>
-      document.querySelector(".loader_wrapper").classList.add("done")
-    );
-  }, []);
-  return (
-    <DataContextProvider>
+
+class App extends Component {
+  componentDidMount(){
+    document.querySelector(".loader_wrapper").classList.add("done");
+  }
+  render() {
+    return (
+      <DataContextProvider>
       <AuthContextProvider>
         <BrowserRouter>
           <div className="App">
-            
             <Route path="/home" component={Home}/>
             <Route path="/home/:postId/comments" component={Comments} />
             <Route exact path="/home/createPost" component={CreatePost} />
@@ -37,7 +36,8 @@ function App() {
         </BrowserRouter>
       </AuthContextProvider>
     </DataContextProvider>
-  );
+    );
+  }
 }
 
 export default App;
