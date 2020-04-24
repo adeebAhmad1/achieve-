@@ -1,23 +1,37 @@
 import React, { Component,createContext } from 'react'
 import { db } from '../config/firebase';
 import { AuthContext } from './AuthContext';
+import { Toast } from 'materialize-css';
 export const DataContext = createContext()
 class DataContextProvider extends Component {
   static contextType = AuthContext;
   state={
     users: [],
     posts: [],
-    chat: [],
-    loading: true
+    loading: true,
+    user: {}
   }
   componentDidMount(){
+    this.getData()
+  }
+  componentDidUpdate(){
+    if(this.state.user.uid){
+      if(this.state.user.uid !== this.context.user.uid){
+        console.log("MY Name is Adeeb")
+      }
+    }
+  }
+  getData = ()=>{
+    this.setState({loading: true})
     db.collection("users").onSnapshot(snapShot=>{
       const users = []
       snapShot.forEach(doc=>{
         const user = doc.data();
         user.id = doc.id;
-        users.push(user)
+        users.push(user);
       })
+      const user = users.find(user=> user.uid === this.context.user.uid) || {};
+      this.setState({user})
       this.setState({users});
       this.getPosts()
     })
@@ -31,26 +45,12 @@ class DataContextProvider extends Component {
           post.id = doc.id;
           posts.push(post);
         });
-        this.getChat()
-        this.setState({posts});
-      });
-  }
-  getChat = ()=>{
-    db.collection("chat")
-      .onSnapshot((snapShot) => {
-        const chats = [];
-        snapShot.forEach((doc) => {
-          const oneChat = doc.data();
-          oneChat.id = doc.id;
-          chats.push(oneChat);
-        });
-        const chat = chats.filter(el=> el.users.includes(this.context.user.uid));
-        this.setState({chat,loading: false});
+        this.setState({posts,loading: false});
       });
   }
   render () {
     return (
-      <DataContext.Provider value={this.state}>
+      <DataContext.Provider value={{...this.state,getData:this.getData}}>
         {this.props.children}
       </DataContext.Provider>
     )

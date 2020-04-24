@@ -3,7 +3,6 @@ import PostingBox from "../utils/PostingBox";
 import { AuthContext } from "../../context/AuthContext";
 import React, { Component } from "react";
 import { DataContext } from "../../context/DataContext"
-import { Link } from "react-router-dom";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
 import Loader from "../utils/Loader";

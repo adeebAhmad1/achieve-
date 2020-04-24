@@ -1,8 +1,8 @@
 import React from "react";
 import UserImage from "./UserImage";
 import UserChat from "./UserChat";
-
-const SideBar = ({user:{image,name,uid} ,email ,chat , users}) => {
+import { Link } from "react-router-dom";
+const SideBar = ({user:{image,name,uid} ,email ,chat , users,history}) => {
   const showSideUsers = (chats,users)=>{
     if(chats.length > 0){
       chats.sort((a,b)=> b.lastMessage.time - a.lastMessage.time)
@@ -17,18 +17,20 @@ const SideBar = ({user:{image,name,uid} ,email ,chat , users}) => {
   }
   return (
     <div className="messages">
+      <Link to="/" className="material-icons" style={{position: `absolute`,left: `10px`}}>arrow_back</Link>
       <div className="profile">
         {image ? (
           <UserImage
+            onClick={()=> history.push("/dashboard")}
             image={image}
             style={{ transform: `scale(0.8)`, margin: `20px auto` }}
           />
         ) : (
-          <div className="avatar">
+          <div onClick={()=> history.push("/dashboard")} className="avatar">
             <p> {name.split("")[0].toUpperCase()} </p>
           </div>
         )}
-        <div className="name2">
+        <div onClick={()=> history.push("/dashboard")} className="name2">
           {name}
           <p className="email"> {email} </p>
         </div>

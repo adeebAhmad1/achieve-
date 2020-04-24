@@ -880,9 +880,12 @@ iframe {
 }
 
 .person {
-  padding: 12px 0 12px 12px;
   border-bottom: 1px solid #79C7C5;
   cursor: pointer;
+}
+.person a{
+  padding: 12px 0 12px 12px;
+  display: inline-block;
 }
 .person:hover {
   background: #F9FBFF;
@@ -907,6 +910,7 @@ iframe {
   font-weight: 500;
   margin: 0 auto;
   text-align: center;
+  cursor: pointer;
 }
 
 .email {
@@ -997,6 +1001,8 @@ iframe {
   border-radius: 20px;
   clear: both;
   max-width: 30%;
+  overflow-wrap: break-word;
+  text-align: justify;
 }
 
 

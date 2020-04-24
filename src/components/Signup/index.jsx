@@ -181,7 +181,7 @@ class Signup extends Component {
                       />
                       <span
                         className="focus-input100"
-                        data-placeholder="Conform Password"
+                        data-placeholder="Confirm Password"
                       ></span>
                     </div>
                   </div>

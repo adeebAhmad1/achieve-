@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import firebase from "../../config/firebase";
 import { Toast } from "materialize-css";
 import Loader from "../utils/Loader";
+import { DataContext } from "../../context/DataContext";
 class Login extends Component {
+  static contextType = DataContext
   state = {
     email: "",
     password: "",
@@ -21,6 +23,7 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({ loading: true });
+    
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)

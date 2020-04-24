@@ -3,6 +3,7 @@ import SideBar from "../utils/SideBar";
 import { DataContext } from "../../context/DataContext";
 import { AuthContext } from "../../context/AuthContext";
 import Loader from "../utils/Loader";
+import { db } from "../../config/firebase";
 
 class ChatPlace extends Component {
   render() {
@@ -11,7 +12,26 @@ class ChatPlace extends Component {
 }
 
 class Inbox extends Component {
+  state={
+    chat: []
+  }
   static contextType = AuthContext;
+  componentDidMount(){
+    db.collection("chat").onSnapshot(snapShot=>{
+      const chats = []
+      snapShot.forEach(doc=>{
+        const singleChat = doc.data();
+        singleChat.id = doc.id;
+        chats.push(singleChat)
+      })
+      
+      const chat = chats.filter((el) =>{ 
+        console.log(el.users)
+        return el.users.includes(this.context.user.uid)
+       });
+      this.setState({chat})
+    })
+  }
   render() {
     return (
       <DataContext.Consumer>
@@ -29,7 +49,7 @@ class Inbox extends Component {
               <SideBar
                 user={user}
                 email={this.context.user.email}
-                chat={state.chat}
+                chat={this.state.chat}
                 users={exceptOnlineUser}
               />
               <ChatPlace />
