@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { db, storageRef } from "../../config/firebase";
 import { DataContext } from "../../context/DataContext";
+import Loader from "../utils/Loader";
 class CreatePost extends Component {
   static contextType = AuthContext;
   state = {
@@ -115,9 +116,7 @@ class CreatePost extends Component {
             (el) => el.uid === this.context.user.uid
           );
           return state.loading ? (
-            <div className="loader_wrapper">
-              <div className="loader"></div>
-            </div>
+            <Loader />
           ) : (
             <div className="new-post-outer">
               <div
@@ -153,9 +152,7 @@ class CreatePost extends Component {
                   <span className="user_name"> {user.name} </span>
                 </div>
                 {this.state.loading ? (
-                  <div className="loader_wrapper">
-                    <div className="loader"></div>
-                  </div>
+                  <Loader/>
                 ) : (
                   <form onSubmit={this.onSubmit}>
                     <div className="posting_box">
@@ -238,9 +235,7 @@ class CreatePost extends Component {
         }}
       </DataContext.Consumer>
     ) : (
-      <div className="loader_wrapper">
-        <div className="loader"></div>
-      </div>
+      <Loader/>
     );
   }
 }

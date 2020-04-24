@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import "./App.css";
 import { Route, BrowserRouter } from "react-router-dom";
 import Login from "./components/Login/index";
@@ -12,30 +12,42 @@ import CreatePost from "./components/Home/CreatePost";
 import Comments from "./components/utils/Comments";
 import DataContextProvider from "./context/DataContext";
 import UploadImage from "./components/Signup/UploadImage";
+import Chat from "./components/Chat";
+import Inbox from "./components/Chat/Inbox";
 
 class App extends Component {
-  componentDidMount(){
+  componentDidMount() {
     document.querySelector(".loader_wrapper").classList.add("done");
   }
   render() {
     return (
-      <DataContextProvider>
       <AuthContextProvider>
-        <BrowserRouter>
-          <div className="App">
-            <Route path="/home" component={Home}/>
-            <Route path="/home/:postId/comments" component={Comments} />
-            <Route exact path="/home/createPost" component={CreatePost} />
-            <Route exact path="/" component={Home} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Signup} />
-            <Route exact path="/addpicture" component={UploadImage} />
-            <Route exact path="/forgot" component={Forgot} />
-            <Route exact path="/dashboard" component={Dashboard} />
-          </div>
-        </BrowserRouter>
+        <DataContextProvider>
+          <BrowserRouter>
+            <div className="App">
+              <Route path="/home" component={Home} />
+              <Route path="/home/:postId/comments" component={Comments} />
+              <Route exact path="/home/createPost" component={CreatePost} />
+              <Route exact path="/" component={Home} />
+              <Route
+                exact
+                path="/inbox/:activeUserId/:reciverId"
+                component={Chat}
+              />
+              <Route
+                exact
+                path="/inbox"
+                component={Inbox}
+              />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route exact path="/addpicture" component={UploadImage} />
+              <Route exact path="/forgot" component={Forgot} />
+              <Route exact path="/dashboard" component={Dashboard} />
+            </div>
+          </BrowserRouter>
+        </DataContextProvider>
       </AuthContextProvider>
-    </DataContextProvider>
     );
   }
 }

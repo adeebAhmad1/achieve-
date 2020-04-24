@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 //firebase
 import firebase from "../../config/firebase";
 import { Toast } from "materialize-css";
+import Loader from "../utils/Loader";
 
 class Forgot extends Component {
   state = {
@@ -44,9 +45,7 @@ class Forgot extends Component {
   };
   render() {
     return this.state.loading ? (
-      <div className="loader_wrapper">
-        <div className="loader"></div>
-      </div>
+      <Loader/>
     ) : (
       <div>
         <div className="container text-center">

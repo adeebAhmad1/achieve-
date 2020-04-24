@@ -6,6 +6,7 @@ import { Toast } from "materialize-css";
 import { Link } from "react-router-dom";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
+import UserImage from "../utils/UserImage";
 class Dashboard extends Component {
   state = {
     user: {},
@@ -31,20 +32,14 @@ class Dashboard extends Component {
     const links = [
       { text: "Home", link: "/" },
       { text: "Logout", link: "/login" },
+      {text: "Inbox", link: "/inbox"}
     ];
     return this.context.isAuth ? (
       <div className="" style={{ height: `100vh` }}>
         <Header links={links} history={this.props.history} />
         <div className="container outer">
           <div className="styles">
-            <div className="avatar-upload">
-              <div class="avatar-preview">
-                <div
-                  id="imagePreview"
-                  style={{ backgroundImage: `url(${this.state.user.image})` }}
-                ></div>
-              </div>
-            </div>
+            <UserImage image={this.state.user.image} />
             <ul className="collection with-header ">
               <li className="collection-header">
                 <h4 className="center">Personal Details</h4>

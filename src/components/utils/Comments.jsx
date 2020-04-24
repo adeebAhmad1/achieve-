@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { DataContext } from "../../context/DataContext";
 import { AuthContext } from "../../context/AuthContext";
 import { db } from "../../config/firebase";
+import Loader from "./Loader";
 
 class Comments extends Component {
   static contextType = AuthContext;
@@ -23,9 +24,7 @@ class Comments extends Component {
           );
           return post ? (
             state.loading ? (
-              <div className="loader_wrapper">
-                <div className="loader"></div>
-              </div>
+              <Loader/>
             ) : (
               <div className="new-post-outer">
                 <div

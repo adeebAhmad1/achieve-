@@ -6,11 +6,11 @@ import { DataContext } from "../../context/DataContext"
 import { Link } from "react-router-dom";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
+import Loader from "../utils/Loader";
 class Home extends Component {
   static contextType = AuthContext
   state={
     posts: [],
-
   }
   componentDidMount() {
     setTimeout(() => {
@@ -21,14 +21,12 @@ class Home extends Component {
   }
   
   render() {
-    const links = [{text: "Profile", link: "/dashboard"},{text: "Logout", link: "/login"}]
+    const links = [{text: "Profile", link: "/dashboard"},{text: "Logout", link: "/login"},{text: "Inbox", link: "/inbox"}]
     return (
       <DataContext.Consumer>
         {(state)=>{
           state.posts.sort((a,b)=> b.date-a.date)
-          return state.loading ? <div className="loader_wrapper">
-            <div className="loader"></div>
-          </div> :
+          return state.loading ? <Loader/> :
           <div>
             <Header links={links} history={this.props.history}/>
             <PostingBox history={this.props.history} />

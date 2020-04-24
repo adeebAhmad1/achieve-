@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import firebase, { storageRef, db } from "../../config/firebase";
 import { DataContext } from "../../context/DataContext";
 import { Toast } from "materialize-css";
+import Loader from "../utils/Loader";
 class UploadImage extends Component {
   static contextType = DataContext;
   state = {
@@ -48,17 +49,15 @@ class UploadImage extends Component {
   };
   render() {
     return this.context.loading ? (
-      <div className="loader_wrapper">
-        <div className="loader"></div>
-      </div>
+      <Loader/>
     ) : (
       <form onSubmit={this.onSubmit} className="uploadImage">
-        <div class="container">
+        <div className="container">
           <h1>
             Acheve Church  Plus<small>Upload Image</small>
           </h1>
-          <div class="avatar-upload">
-            <div class="avatar-edit">
+          <div className="avatar-upload">
+            <div className="avatar-edit">
               <input
                 type="file"
                 id="imageUpload"
@@ -69,7 +68,7 @@ class UploadImage extends Component {
                 create
               </label>
             </div>
-            <div class="avatar-preview">
+            <div className="avatar-preview">
               <div
                 id="imagePreview"
                 style={{ backgroundImage: `url(${this.state.fileURL})` }}

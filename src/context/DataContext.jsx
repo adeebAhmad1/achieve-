@@ -1,10 +1,13 @@
 import React, { Component,createContext } from 'react'
 import { db } from '../config/firebase';
+import { AuthContext } from './AuthContext';
 export const DataContext = createContext()
 class DataContextProvider extends Component {
+  static contextType = AuthContext;
   state={
     users: [],
     posts: [],
+    chat: [],
     loading: true
   }
   componentDidMount(){
@@ -16,7 +19,7 @@ class DataContextProvider extends Component {
         users.push(user)
       })
       this.setState({users});
-      this.getPosts();
+      this.getPosts()
     })
   }
   getPosts = ()=>{
@@ -28,7 +31,21 @@ class DataContextProvider extends Component {
           post.id = doc.id;
           posts.push(post);
         });
-        this.setState({posts,loading: false});
+        this.getChat()
+        this.setState({posts});
+      });
+  }
+  getChat = ()=>{
+    db.collection("chat")
+      .onSnapshot((snapShot) => {
+        const chats = [];
+        snapShot.forEach((doc) => {
+          const oneChat = doc.data();
+          oneChat.id = doc.id;
+          chats.push(oneChat);
+        });
+        const chat = chats.filter(el=> el.users.includes(this.context.user.uid));
+        this.setState({chat,loading: false});
       });
   }
   render () {

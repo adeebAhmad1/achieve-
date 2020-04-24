@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 //firebase
 import firebase from "../../config/firebase";
 import { Toast } from "materialize-css";
+import Loader from "../utils/Loader";
 class Login extends Component {
   state = {
     email: "",
@@ -38,9 +39,7 @@ class Login extends Component {
   };
   render() {
     return this.state.loading ? (
-      <div className="loader_wrapper" style={{width: `100%`}}>
-        <div className="loader"></div>
-      </div>
+      <Loader />
     ) : (
       <div>
         <div className="container row">

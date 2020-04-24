@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { db } from "../../config/firebase";
+import { db, storage } from "../../config/firebase";
+import { Toast } from "materialize-css";
+import { Link } from "react-router-dom";
 class ImageBox extends Component {
   static contextType = AuthContext;
   state = {
@@ -23,13 +25,14 @@ class ImageBox extends Component {
       });
     if (this.props.likes.includes(this.context.user.uid)) {
       this.refs.like.innerHTML = "favorite";
+      this.refs.like.parentNode.classList.add("liked")
     }
   }
   componentWillReceiveProps(props) {
     this.setState({ likes: props.likes });
   }
   render() {
-    const { text, image, likes, comments, id, date, uid, video } = this.props;
+    const { text, image, likes, comments, id, date, uid, video, history } = this.props;
     return (
       <div className="f-card">
         <div className="header">
@@ -44,9 +47,16 @@ class ImageBox extends Component {
             }
           />
           <div className="co-name">
-            <a href="/" onClick={(e) => e.preventDefault()}>
+            <Link to="/" onClick={(e)=>{
+              e.preventDefault();
+              let destination = `/inbox/${this.context.user.uid}/${uid}`
+              if(uid === this.context.user.uid){
+                destination = `/dashboard`
+              }
+              history.push(destination)
+            }}>
               {this.state.user.name}
-            </a>
+            </Link>
           </div>
           <div className="time">
             <a href="/" onClick={(e) => e.preventDefault()}>
@@ -85,13 +95,14 @@ class ImageBox extends Component {
               onClick={() => {
                 const { like } = this.refs;
                 const { uid } = this.context.user;
-                if (!this.props.likes.includes(uid)) {
+                if (!likes.includes(uid)) {
                   likes.unshift(uid);
                   db.collection("posts")
                     .doc(id)
                     .update({ likes })
                     .then(() => {
                       like.textContent = "favorite";
+                      this.refs.like.parentNode.classList.add("liked")
                     });
                 } else {
                   const i = likes.indexOf(uid);
@@ -101,6 +112,7 @@ class ImageBox extends Component {
                     .update({ likes })
                     .then(() => {
                       like.textContent = "favorite_border";
+                      this.refs.like.parentNode.classList.remove("liked")
                     });
                 }
               }}
@@ -111,7 +123,7 @@ class ImageBox extends Component {
               Like
             </span>
             <span
-              onClick={() => this.props.history.push(`/home/${id}/comments`)}
+              onClick={() => history.push(`/home/${id}/comments`)}
               onMouseEnter={() => {
                 const { comment } = this.refs;
                 comment.innerHTML = "chat";
@@ -129,12 +141,21 @@ class ImageBox extends Component {
             {this.context.user.uid === uid ? (
               <span
                 onClick={() => {
+                  const file = image || video;
                   db.collection("posts")
                     .doc(id)
                     .delete()
                     .then(() => {
-                      console.log("Deleted");
-                    });
+                      if(file){
+                        storage.refFromURL(file).delete().then(()=>{
+                          new Toast({html: "Post Deleted Successfully",classes: "green"})
+                        }).catch((error) => {
+                          new Toast({html: error.message,classes: "red"})
+                        });
+                      }
+                    }).catch((error) => {
+                      new Toast({html: error.message,classes: "red"})
+                  });
                 }}
               >
                 <i className="material-icons">delete</i>Delete
