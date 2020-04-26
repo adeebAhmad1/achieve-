@@ -21,12 +21,9 @@ class Inbox extends Component {
       const chats = []
       snapShot.forEach(doc=>{
         const singleChat = doc.data();
-        singleChat.id = doc.id;
         chats.push(singleChat)
       })
-      
       const chat = chats.filter((el) =>{ 
-        console.log(el.users)
         return el.users.includes(this.context.user.uid)
        });
       this.setState({chat})

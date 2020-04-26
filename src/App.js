@@ -31,7 +31,7 @@ class App extends Component {
               <Route exact path="/" component={Home} />
               <Route
                 exact
-                path="/inbox/:activeUserId/:reciverId"
+                path="/inbox/:reciverId"
                 component={Chat}
               />
               <Route

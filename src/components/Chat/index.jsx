@@ -5,8 +5,8 @@ import Loader from "../utils/Loader";
 import { AuthContext } from "../../context/AuthContext";
 import { db } from "../../config/firebase";
 import SideBar from "../utils/SideBar";
-import { Link } from "react-router-dom";
-
+import { Toast } from "materialize-css";
+import audio from "../../sound/v.mp3"
 class Chat extends Component {
   static contextType = AuthContext;
   state = {
@@ -14,20 +14,31 @@ class Chat extends Component {
     chat: [],
     loading: true,
     lastMessage: {},
-    activeChat: {}
+    isLoading: true
   };
-  boolean = true;
+  _isMounted = false
   componentDidMount() {
+    this._isMounted = true
     db.collection("chat").onSnapshot((snapShot) => {
       const chats = [];
       snapShot.forEach((doc) => {
         const oneChat = doc.data();
-        oneChat.id = doc.id;
         chats.push(oneChat);
       });
       const chat = chats.filter((el) =>
         el.users.includes(this.context.user.uid)
       );
+      const activeChat = chat.find(el=>el.users.includes(this.props.match.params.reciverId));
+      if(this._isMounted){
+        if(activeChat){
+          if(!activeChat.read){
+            if(activeChat.chatting[activeChat.chatting.length - 1].uid === this.props.match.params.reciverId){
+              new Audio(audio).play()
+              db.collection("chat").doc(this.getId()).update({read: true})
+            }
+          }
+        }
+      }
       setTimeout(() => {
         if(document.querySelector(".middle")){
           document.querySelector(".middle").scrollTo(0, document.querySelector(".middle").scrollHeight)
@@ -36,38 +47,36 @@ class Chat extends Component {
       this.setState({ chat, loading: false });
     });
   }
-  onSubmit = (e, chats, userOne, userTwo) => {
+  componentWillUnmount= ()=> this._isMounted = false
+  onSubmit = (e, chat, userOne, userTwo) => {
     e.preventDefault();
-    let chat = chats.find(
-      (chat) => chat.users.includes(userOne) && chat.users.includes(userTwo)
-    );
     const newOne = {
       time: Date.now(),
       message: document.querySelector("#message_input").value,
-      userId: userOne,
+      uid: userOne,
     };
+    console.log(chat)
     document.querySelector("#message_input").value = ""
-    this.setState({lastMessage: newOne})
+    this.setState({lastMessage: newOne});
+    const docid = this.getId();
     if (chat) {
-      chat.lastMessage = newOne;
       chat.chatting.push(newOne);
-      db.collection("chat").doc(chat.id).update(chat);
     } else {
       chat = {};
       chat.chatting = [];
       chat.chatting.push(newOne);
-      chat.lastMessage = newOne;
       chat.users = [userOne, userTwo];
-      db.collection("chat").add(chat);
     }
+    chat.read = false
+    db.collection("chat").doc(docid).set(chat)
   };
-  componentWillUpdate(){
-      if(document.querySelector(".middle")){
-        document.querySelector(".middle").scrollTo(0, document.querySelector(".middle").scrollHeight)
-      }
+  getId = ()=> [this.props.match.params.reciverId,this.context.user.uid].sort().join(":")
+  componentDidUpdate(){
+    if(document.querySelector(".middle")){
+      document.querySelector(".middle").scrollTo(0, document.querySelector(".middle").scrollHeight)
+    }
   }
-  showChats = (chats, user) => chats ? chats.chatting.map((chat, i) => ( <ChatBox key={i} message={chat.message} type={user.uid === chat.userId ? "outgoing" : "incoming"}/>)) : ""
-  handleChange = (e) => this.setState({ [e.target.name]: e.target.value });
+  showChats = (chats, user) => chats ? chats.chatting.map((chat, i) => ( <ChatBox key={i} message={chat.message} type={user.uid === chat.uid ? "outgoing" : "incoming"}/>)) : ""
   render() {
     return this.state.loading ? (
       <Loader />
@@ -79,10 +88,6 @@ class Chat extends Component {
           let chats = {};
           if(user && reciver){
             chats = this.state.chat.find((el) => el.users.includes(user.uid) && el.users.includes(reciver.uid));
-            if(chats) {
-              if(this.boolean) this.setState({activeChat: chats});
-              this.boolean = false
-            }
           }
           const exceptOnlineUser = state.users.filter((el) => el.uid !== user.uid);
           return state.loading ? (
@@ -115,7 +120,7 @@ class Chat extends Component {
                   </div>
                 </div>
                 <div className="bottom-bar">
-                  <form action="/" onSubmit={(e) => this.onSubmit(e, this.state.chat, user.uid, reciver.uid)} className="chat">
+                  <form action="/" onSubmit={(e) => this.onSubmit(e, chats, user.uid, reciver.uid)} className="chat">
                     <input
                       type="text"
                       autoComplete="off"

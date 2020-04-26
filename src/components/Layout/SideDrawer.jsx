@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
-import { AutoInit, Sidenav } from "materialize-css";
+import React, { useEffect, useState } from "react";
+import { Sidenav } from "materialize-css";
 import { Link } from "react-router-dom";
 const SideDrawer = (props) => {
   const [instance, setInstance] = useState(null)
@@ -32,8 +32,8 @@ const SideDrawer = (props) => {
     });
   };
   return (
-    <ul id="slide-out" className="sidenav">
-      <li><Link to="" onClick={(e)=> e.preventDefault()} className="waves-effect" style={{fontSize: `2rem`,height: `5rem`,paddingTop: `10px`}}>Acheve Church +</Link></li>
+    <ul id="slide-out" className="sidenav" style={{width: `400px`}}>
+      <li><Link to="" onClick={(e)=> e.preventDefault()} className="waves-effect" style={{fontSize: `2rem`,height: `5rem`,paddingTop: `10px`}}>Acheve Church+</Link></li>
       {showLinks()}
     </ul>
   );

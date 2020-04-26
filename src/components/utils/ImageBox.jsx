@@ -49,7 +49,7 @@ class ImageBox extends Component {
           <div className="co-name">
             <Link to="/" onClick={(e)=>{
               e.preventDefault();
-              let destination = `/inbox/${this.context.user.uid}/${uid}`
+              let destination = `/inbox/${uid}`
               if(uid === this.context.user.uid){
                 destination = `/dashboard`
               }

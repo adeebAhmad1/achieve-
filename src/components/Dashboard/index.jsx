@@ -3,7 +3,6 @@ import { db } from "../../config/firebase";
 import { AuthContext } from "../../context/AuthContext";
 import firebase from "../../config/firebase";
 import { Toast } from "materialize-css";
-import { Link } from "react-router-dom";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
 import UserImage from "../utils/UserImage";

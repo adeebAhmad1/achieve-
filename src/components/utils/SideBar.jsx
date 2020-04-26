@@ -2,16 +2,16 @@ import React from "react";
 import UserImage from "./UserImage";
 import UserChat from "./UserChat";
 import { Link } from "react-router-dom";
-const SideBar = ({user:{image,name,uid} ,email ,chat , users,history}) => {
+const SideBar = ({user:{image,name,uid} ,email ,chat , users,history,}) => {
   const showSideUsers = (chats,users)=>{
     if(chats.length > 0){
-      chats.sort((a,b)=> b.lastMessage.time - a.lastMessage.time)
+      chats.sort((a,b)=> b.chatting[b.chatting.length-1].time -a.chatting[a.chatting.length-1].time)
       return chats.map((chat,i)=>{
         const user = users.find(el=>chat.users.includes(el.uid));
         const chatUsers = chat.users;
-        const recieverIndex = chatUsers.indexOf(uid) === 0 ? 1 : 0 ;
-        const reciver = chatUsers[recieverIndex];
-        return <UserChat link={`/inbox/${uid}/${reciver}`} message={chat.lastMessage.message} person={user.name} time={new Date(chat.lastMessage.time).toLocaleTimeString() + " " + new Date(chat.lastMessage.time).toLocaleDateString() } key={i}/>
+        const reciver = chatUsers.find(el=> el !== uid);
+        const {message , time,uid: senderId} = chat.chatting[chat.chatting.length -1];
+        return <UserChat link={`/inbox/${reciver}`} style={!chat.read && senderId === reciver ? "boldChat" : ""} message={message} person={user.name} time={new Date(time).toLocaleTimeString() + " " + new Date(time).toLocaleDateString() } key={i}/>
       })
     }
   }
