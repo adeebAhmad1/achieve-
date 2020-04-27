@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { db, storage } from "../../config/firebase";
 import { Toast } from "materialize-css";
@@ -6,33 +6,23 @@ import { Link } from "react-router-dom";
 class ImageBox extends Component {
   static contextType = AuthContext;
   state = {
-    user: {},
     likes: 0,
   };
   componentDidMount() {
-    this.setState({ likes: this.props.likes });
-    db.collection("users")
-      .get()
-      .then((snapShot) => {
-        const users = [];
-        snapShot.forEach((doc) => {
-          const user = doc.data();
-          user.id = doc.id;
-          users.push(user);
-        });
-        const user = users.find((el) => el.uid === this.props.uid);
-        this.setState({ user });
-      });
-    if (this.props.likes.includes(this.context.user.uid)) {
-      this.refs.like.innerHTML = "favorite";
-      this.refs.like.parentNode.classList.add("liked")
+    if(this.props.post.type === "post")this.setState({ likes: this.props.likes });
+    if(this.props.post.type === "post"){
+      if (this.props.post.likes.includes(this.context.user.uid)) {
+        this.refs.like.innerHTML = "favorite";
+        this.refs.like.parentNode.classList.add("liked")
+      }
     }
   }
   componentWillReceiveProps(props) {
-    this.setState({ likes: props.likes });
+    if(props.post.type === "post")this.setState({ likes: props.post.likes });
   }
   render() {
-    const { text, image, likes, comments, id, date, uid, video, history } = this.props;
+    const {post: { text, image, likes, comments, id, date, uid, video,name,type,time, description },users,history} = this.props;
+    const user = users.find((el) => el.uid === uid);
     return (
       <div className="f-card">
         <div className="header">
@@ -42,7 +32,7 @@ class ImageBox extends Component {
           <img
             className="co-logo"
             src={
-              this.state.user.image ||
+              user.image ||
               "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
             }
           />
@@ -55,7 +45,7 @@ class ImageBox extends Component {
               }
               history.push(destination)
             }}>
-              {this.state.user.name}
+              {user.name}
             </Link>
           </div>
           <div className="time">
@@ -66,6 +56,7 @@ class ImageBox extends Component {
             · <i className="fa fa-globe"></i>
           </div>
         </div>
+        {this.props.post.type === "post" ? <div>
         <div className="content">
           <p>{text}</p>
         </div>
@@ -82,6 +73,11 @@ class ImageBox extends Component {
             ""
           )}
         </div>
+        </div>: <div>
+          <p className="event"><span>Event Name: </span><span style={{fontWeight: `bold`}}> {name} </span></p>
+          <p className="event"><span>Event Time:</span> <span style={{fontWeight: `bold`}}> {time} </span></p>
+          <p className="event"><span>Event Description:</span> <span style={{fontWeight: `bold`}}> {description} </span></p>
+          </div>}
         <span className="line" style={{ height: `1px` }}></span>
         <div className="" style={{ marginBottom: `30px` }}>
           <div className="left"> {likes.length} Likes </div>
@@ -97,7 +93,7 @@ class ImageBox extends Component {
                 const { uid } = this.context.user;
                 if (!likes.includes(uid)) {
                   likes.unshift(uid);
-                  db.collection("posts")
+                  db.collection(type + "s")
                     .doc(id)
                     .update({ likes })
                     .then(() => {
@@ -107,7 +103,7 @@ class ImageBox extends Component {
                 } else {
                   const i = likes.indexOf(uid);
                   likes.splice(i, 1);
-                  db.collection("posts")
+                  db.collection(type + "s")
                     .doc(id)
                     .update({ likes })
                     .then(() => {
@@ -142,7 +138,7 @@ class ImageBox extends Component {
               <span
                 onClick={() => {
                   const file = image || video;
-                  db.collection("posts")
+                  db.collection(type + "s")
                     .doc(id)
                     .delete()
                     .then(() => {

@@ -9,17 +9,11 @@ class DataContextProvider extends Component {
     users: [],
     posts: [],
     loading: true,
-    user: {}
+    user: {},
+    events: []
   }
   componentDidMount(){
     this.getData()
-  }
-  componentDidUpdate(){
-    if(this.state.user.uid){
-      if(this.state.user.uid !== this.context.user.uid){
-        console.log("MY Name is Adeeb")
-      }
-    }
   }
   getData = ()=>{
     this.setState({loading: true})
@@ -43,9 +37,25 @@ class DataContextProvider extends Component {
         snapShot.forEach((doc) => {
           const post = doc.data();
           post.id = doc.id;
+          post.type= "post"
           posts.push(post);
         });
-        this.setState({posts,loading: false});
+        this.setState({posts});
+        this.getEvents()
+      });
+  }
+  getEvents = ()=>{
+    db.collection("events")
+      .onSnapshot((snapShot) => {
+        const events = [];
+        snapShot.forEach((doc) => {
+          const post = doc.data();
+          post.id = doc.id;
+          post.type= "event"
+          events.push(post);
+        });
+        this.setState({events,loading: false});
+        console.log("HELLO")
       });
   }
   render () {

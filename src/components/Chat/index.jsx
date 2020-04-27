@@ -33,7 +33,6 @@ class Chat extends Component {
         if(activeChat){
           if(!activeChat.read){
             if(activeChat.chatting[activeChat.chatting.length - 1].uid === this.props.match.params.reciverId){
-              new Audio(audio).play()
               db.collection("chat").doc(this.getId()).update({read: true})
             }
           }
@@ -55,7 +54,6 @@ class Chat extends Component {
       message: document.querySelector("#message_input").value,
       uid: userOne,
     };
-    console.log(chat)
     document.querySelector("#message_input").value = ""
     this.setState({lastMessage: newOne});
     const docid = this.getId();

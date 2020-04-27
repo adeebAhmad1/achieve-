@@ -259,7 +259,7 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .login100-form-btn {
@@ -600,12 +600,6 @@ iframe {
   .iconRow {
     padding: 0;
   }
-}
-.iconBox:not(:last-child) {
-  border-right: 1px solid grey;
-}
-.iconBox {
-  margin-left: 10p;
 }
 .iconText {
   display: inline-block;
@@ -1132,4 +1126,12 @@ button.message_button:hover {
   position: absolute;
   bottom: 10px;
   right: 50px;
+}
+
+.event{
+  width: 100%;
+}
+.event span{
+  /* width: 50%; */
+  display: inline-block;
 }

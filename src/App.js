@@ -14,6 +14,7 @@ import DataContextProvider from "./context/DataContext";
 import UploadImage from "./components/Signup/UploadImage";
 import Chat from "./components/Chat";
 import Inbox from "./components/Chat/Inbox";
+import Event from "./components/utils/Event";
 
 class App extends Component {
   componentDidMount() {
@@ -39,6 +40,7 @@ class App extends Component {
                 path="/inbox"
                 component={Inbox}
               />
+              <Route path="/home/event" component={Event} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/addpicture" component={UploadImage} />

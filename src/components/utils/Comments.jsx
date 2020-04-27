@@ -19,9 +19,7 @@ class Comments extends Component {
     return (
       <DataContext.Consumer>
         {(state) => {
-          const post = state.posts.find(
-            (post) => post.id === this.props.match.params.postId
-          );
+          const post = state.posts.find((post) => post.id === this.props.match.params.postId) ||state.events.find((post) => post.id === this.props.match.params.postId);
           return post ? (
             state.loading ? (
               <Loader/>
@@ -91,12 +89,11 @@ class Comments extends Component {
                           uid: this.context.user.uid,
                           comment: this.state.comment,
                         });
-                        db.collection("posts")
+                        db.collection(post.type + "s")
                           .doc(post.id)
                           .update({ comments })
                           .then(() => {
                             this.setState({comment: ""})
-                            console.log("HURRAY");
                           });
                       }}
                     >
