@@ -54,7 +54,7 @@ class Home extends Component {
         else{
           if(el.chatting[el.chatting.length -1].uid !== this.context.user.uid){
             const user = this.state.users.find(({uid})=> uid === el.chatting[el.chatting.length -1].uid)
-            new Toast({html: `<h5 style="display: block; width: 100%">New Message</h5><p style="display: block; width: 100%">${user.name} : ${el.chatting[el.chatting.length -1].message}</p>`,classes: "green"});
+            new Toast({html: `${user.name} : ${el.chatting[el.chatting.length -1].message}`,classes: "myColor"});
             db.collection("chat").doc(el.id).update({read: true})
           }
         }

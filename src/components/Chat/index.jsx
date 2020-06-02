@@ -5,8 +5,7 @@ import Loader from "../utils/Loader";
 import { AuthContext } from "../../context/AuthContext";
 import { db } from "../../config/firebase";
 import SideBar from "../utils/SideBar";
-import { Toast } from "materialize-css";
-import audio from "../../sound/v.mp3"
+import { Link } from "react-router-dom";
 class Chat extends Component {
   static contextType = AuthContext;
   state = {
@@ -14,10 +13,18 @@ class Chat extends Component {
     chat: [],
     loading: true,
     lastMessage: {},
-    isLoading: true
+    isLoading: true,
+    width: window.innerWidth
   };
-  _isMounted = false
+  resize = ()=>{
+    this.setState({width: window.innerWidth})
+  }
+  _isMounted = false;
+  componentDidCatch(){
+    this.props.history.push("/login")
+  }
   componentDidMount() {
+    window.addEventListener("resize", this.resize)
     this._isMounted = true
     db.collection("chat").onSnapshot((snapShot) => {
       const chats = [];
@@ -46,7 +53,10 @@ class Chat extends Component {
       this.setState({ chat, loading: false });
     });
   }
-  componentWillUnmount= ()=> this._isMounted = false
+  componentWillUnmount= ()=> {
+    this._isMounted = false;
+    window.removeEventListener("resize",this.resize)
+  }
   onSubmit = (e, chat, userOne, userTwo) => {
     e.preventDefault();
     const newOne = {
@@ -92,15 +102,22 @@ class Chat extends Component {
             <Loader />
           ) : (
             <div className="chat_box_outer">
+              {this.state.width >= 600 ?
+              <SideBar
+              history={this.props.history}
+              user={user}
+              users={exceptOnlineUser}
+              chat={this.state.chat}
+              email={this.context.user.email}
+            />: ""}
               <div className="chatbox">
-                <div className="top-bar">
+                <div className="top-bar" style={{display: `flex`,alignItems: `center`}}>
+                <Link to="/" className="material-icons" style={{marginRight: `20px`}}>arrow_back</Link>
                   {user.image ? (
                     <img
                       className="co-logo"
                       style={{
-                        marginTop: `10px`,
-                        marginLeft: `10px`,
-                        marginRight: 0,
+                        float: `none`
                       }}
                       src={reciver.image}
                       alt={reciver.name}
@@ -133,13 +150,6 @@ class Chat extends Component {
                   </form>
                 </div>
               </div>
-              <SideBar
-                history={this.props.history}
-                user={user}
-                users={exceptOnlineUser}
-                chat={this.state.chat}
-                email={this.context.user.email}
-              />
             </div>
           );
         }}

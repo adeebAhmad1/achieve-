@@ -8,7 +8,8 @@ class Header extends Component {
       <div className="" style={{ position: `relative` }}>
         <SideDrawer side="right" links={this.props.links} history={this.props.history} />
         <a
-          href="#"
+          href="/"
+          onClick={e=> e.preventDefault()}
           style={{
             position: `absolute`,
             marginTop: `30px`,
@@ -20,10 +21,10 @@ class Header extends Component {
         >
           <i className="material-icons">menu</i>
         </a>
-        <nav className="green" style={{padding: `20px 0`,boxSizing: `content-box`}}>
-          <div class="nav-wrapper">
-            <Link to="/" class="brand-logo" style={{ marginLeft: `50px` }}>
-            Acheve Church  Plus
+        <nav style={{padding: `20px 0`,boxSizing: `content-box`,backgroundColor: `#2998ff`}}>
+          <div className="nav-wrapper">
+            <Link to="/" className="brand-logo left" style={{ marginLeft: `50px` }}>
+            Social Feed
             </Link>
           </div>
         </nav>

@@ -10,9 +10,9 @@ const SideDrawer = (props) => {
     setInstance(instance)
   }, []);
   const showLinks = () => {
-    return props.links.map((el) => {
+    return props.links.map((el,i) => {
       return (
-        <li>
+        <li key={i}>
           <Link
             to="/"
             className="waves-effect"
@@ -33,7 +33,7 @@ const SideDrawer = (props) => {
   };
   return (
     <ul id="slide-out" className="sidenav" style={{width: `400px`}}>
-      <li><Link to="" onClick={(e)=> e.preventDefault()} className="waves-effect" style={{fontSize: `2rem`,height: `5rem`,paddingTop: `10px`}}>Acheve Church+</Link></li>
+      <li><Link to="" onClick={(e)=> e.preventDefault()} className="waves-effect" style={{fontSize: `2rem`,height: `5rem`,paddingTop: `10px`}}>Social Feed</Link></li>
       {showLinks()}
     </ul>
   );

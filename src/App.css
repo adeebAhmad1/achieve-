@@ -93,7 +93,7 @@ iframe {
 .txt2 {
   font-family: Poppins;
   font-size: 15px;
-  color: #57b846;
+  color: #2998ff;
   line-height: 1.5;
 }
 
@@ -202,7 +202,7 @@ iframe {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
-  background: #57b846;
+  background: #2998ff;
 }
 .outer{
   display: flex;
@@ -279,14 +279,14 @@ iframe {
   padding: 0 20px;
   width: 100%;
   height: 50px;
-  background-color: #57b846;
+  background-color: #2998ff;
   border-radius: 25px;
 
-  box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-  -moz-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-  -webkit-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-  -o-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-  -ms-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
+  box-shadow: 0 10px 30px 0px rgba(41, 151, 255,0.5);
+  -moz-box-shadow: 0 10px 30px 0px rgba(41, 151, 255,0.5);
+  -webkit-box-shadow: 0 10px 30px 0px rgba(41, 151, 255,0.5);
+  -o-box-shadow: 0 10px 30px 0px rgba(41, 151, 255,0.5);
+  -ms-box-shadow: 0 10px 30px 0px rgba(41, 151, 255,0.5);
 
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -313,69 +313,6 @@ iframe {
   width: 100%;
   display: block;
 }
-
-.alert-validate::before {
-  content: attr(data-validate);
-  position: absolute;
-  max-width: 70%;
-  background-color: #fff;
-  border: 1px solid #c80000;
-  border-radius: 2px;
-  padding: 4px 25px 4px 10px;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  transform: translateY(-50%);
-  right: 0px;
-  pointer-events: none;
-
-  font-family: Poppins;
-  color: #c80000;
-  font-size: 13px;
-  line-height: 1.4;
-  text-align: left;
-
-  visibility: hidden;
-  opacity: 0;
-
-  -webkit-transition: opacity 0.4s;
-  -o-transition: opacity 0.4s;
-  -moz-transition: opacity 0.4s;
-  transition: opacity 0.4s;
-}
-
-.alert-validate::after {
-  content: "\f06a";
-  font-family: FontAwesome;
-  font-size: 16px;
-  color: #c80000;
-
-  display: block;
-  position: absolute;
-  background-color: #fff;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  transform: translateY(-50%);
-  right: 5px;
-}
-
-.alert-validate:hover:before {
-  visibility: visible;
-  opacity: 1;
-}
-
-@media (max-width: 992px) {
-  .alert-validate::before {
-    visibility: visible;
-    opacity: 1;
-  }
-}
-
 /*//////////////////////////////////////////////////////////////////
 [ Login more ]*/
 .login-more li {
@@ -401,22 +338,41 @@ iframe {
 }
 
 .datepicker-date-display {
-  background-color: #57b846 !important;
+  background-color: #2998ff !important;
 }
 .confirmation-btns button {
-  color: #57b846 !important;
+  color: #2998ff !important;
 }
 .dropdown-content span {
-  color: #57b846 !important;
+  color: #2998ff !important;
 }
 .datepicker-table td.is-selected {
-  background-color: #57b846 !important;
+  background-color: #2998ff !important;
   color: #fff !important;
 }
-
+@media only screen and (max-width: 600px){
+  .fbComponent{
+    width: 100% !important;
+  }
+  .f-card{
+    width: 100% !important;
+  }
+  .messages{
+    width: 100% !important;
+  }
+  .chatbox{
+    width: 100% !important 
+  }
+  .email{
+    display: block !important;
+  }
+  .time{
+    display: block !important;
+  }
+}
 .f-card {
   background-color: white;
-  width: 502px;
+  width: 500px;
   border: 1px solid #d0d1d5;
   border-radius: 3px;
   margin: auto;
@@ -443,13 +399,13 @@ iframe {
   font-size: 14px;
   font-weight: bold;
   line-height: 1.38;
-  color: #57b846;
+  color: #2998ff;
   text-decoration: none;
   transition: all .25s ease-in-out;
   margin-bottom: 2px;
 }
 .liked{
-  color: #57b846;
+  color: #2998ff;
 }
 .co-name > a:hover {
   letter-spacing: 2px;
@@ -468,9 +424,11 @@ iframe {
 }
 
 .time > a:hover {
-  color:  #57b846;
+  color:  #2998ff;
 }
-
+.myColor {
+  background-color: #2998ff;
+}
 .options {
   font-family: Poppins;
   font-size: 12px;
@@ -489,19 +447,26 @@ iframe {
   font-size: 14px;
   line-height: 1;
 }
-
+@media only screen and (max-width: 1000px){
+  .time{
+    display: none;
+  }
+  .email{
+    display: none;
+  }
+}
 .reference {
-  width: 476px;
+  width: 100%;
 }
 .reference-thumb {
   display: block;
-  width: 476px;
+  width: 100%;
 }
 .material-icons{
   transform: translateY(5px);
 }
 .social-buttons span:hover{
-  color: #57b846;
+  color: #2998ff;
   letter-spacing: 1.5px;
 }
 .reference-content {
@@ -559,7 +524,6 @@ iframe {
 
 .social-buttons span {
   font-size: 12px;
-  /* margin-right: 20px; */
   margin: 0 auto;
   flex-grow: 1;
   padding: 4px 4px 4px 0;
@@ -568,7 +532,6 @@ iframe {
 }
 
 .social-buttons span:hover {
-  /* text-decoration: underline; */
   cursor: pointer;
 }
 
@@ -686,7 +649,7 @@ iframe {
   display: inline-block;
   padding: 15px;
   box-sizing: border-box;
-  background-color: #57b846;
+  background-color: #2998ff;
   color: #fff;
   border-radius: 10rem;
 }
@@ -834,13 +797,10 @@ iframe {
   font-family: Poppins !important;
 }
 .messages {
-  position: fixed;
   background: #F9FBFF;
-  /* opacity: 0.5; */
   width: 30%;
-  height: 100%;
-  /* top: 2.5%; */
-  /* left: 5%; */
+  height: 100vh;
+
   border-radius: 10px 0 0 10px;
   box-shadow: -5px 5px 10px rgba(119, 119, 119, 0.5);
   overflow-x: hidden;
@@ -858,20 +818,23 @@ iframe {
   font-size: 1em;
   margin-left: 14px;
   letter-spacing: 1px;
-  color: #57b846;
+  color: #2998ff;
+  float: left;
+  clear: both;
 }
 .people .time {
   font-size: 0.9em;
   color: #777777;
-  position: absolute;
-  right: 10px;
-  margin-top: 2px;
+  float: right;
+  /* clear: both; */
 }
 .people .preview {
   color: #999;
   margin-left: 14px;
-  font-size: 0.8em;
+  font-size: 0.9em;
   display: block;
+  float: left;
+  clear: both;
 }
 
 .person {
@@ -899,7 +862,7 @@ iframe {
 
 .name2 {
   text-transform: uppercase;
-  color: #57b846;
+  color: #2998ff;
   font-size: 1em;
   letter-spacing: 2px;
   font-weight: 500;
@@ -909,14 +872,15 @@ iframe {
 }
 
 .email {
-  color: #57b846;
+  color: #2998ff;
   font-size: .8em;
   margin-top: 2px;
 }
 
 .chatbox {
-  position: fixed;
-  left: 30%;
+  /* position: fixed;
+  left: 30%; */
+  position: relative;
   height: 100%;
   width: 70%;
   border-radius: 10px;
@@ -926,7 +890,7 @@ iframe {
 
 .top-bar {
   width: 100%;
-  height: 60px;
+  padding: 20px;
   background: #F9FBFF;
   border-radius: 10px 10px 0 0;
 }
@@ -934,7 +898,7 @@ iframe {
 .avatar {
   width: 35px;
   height: 35px;
-  background: linear-gradient(to bottom left, #57b846 20%, #1ea045 100%);
+  background: linear-gradient(to bottom left, #2998ff 20%, #5432fa 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -956,13 +920,12 @@ iframe {
 }
 
 .name {
-  float: left;
   text-transform: uppercase;
   color: #777777;
-  font-size: 1em;
+  font-size: 1rem;
   letter-spacing: 2px;
   font-weight: 500;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   margin-left: 10px;
 }
 
@@ -970,7 +933,7 @@ iframe {
   background: #F9FBFF;
   width: 100%;
   opacity: 0.85;
-  height: 80%;
+  height: 78%;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -1008,7 +971,7 @@ iframe {
   height: 100%;
 }
 .outgoing .bubble {
-  background: #57b846;
+  background: #2998ff;
   float: right;
 }
 
@@ -1033,12 +996,12 @@ input.message_input {
   margin-left: 20px;
   height: 100%;
   background: #F9FBFF;
-  color: #57b846 !important;
+  color: #2998ff !important;
   overflow: visible;
 }
 
 input.message_input::placeholder {
-  color: #57b846;
+  color: #2998ff;
 }
 
 input.message_input:focus {
@@ -1050,7 +1013,7 @@ button.message_button {
   position: absolute;
   border: 0;
   font-size: 1em;
-  color: #57b846;
+  color: #2998ff;
   top: 19px;
   opacity: 0.8;
   right: 17px;
@@ -1060,7 +1023,7 @@ button.message_button {
 button.message_button:hover {
   transform: scale(1.1);
   transition: all .3s ease-in-out;
-  color: #57b846;
+  color: #2998ff;
 }
 @keyframes bounce {
   30% {
@@ -1078,7 +1041,9 @@ button.message_button:hover {
   }
 }
 .chat_box_outer{
-  display: grid;
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100vh;
 }
 
 .chat_box_outer .container{
@@ -1115,14 +1080,14 @@ button.message_button:hover {
   position: relative;
 }
 .boldChat *{
-  color: #57b846 !important;
+  color: #2998ff !important;
 }
 .boldChat::after{
   content: "";
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #57b846;
+  background-color: #2998ff;
   position: absolute;
   bottom: 10px;
   right: 50px;

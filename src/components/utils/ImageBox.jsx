@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { db, storage } from "../../config/firebase";
 import { Toast } from "materialize-css";
@@ -35,6 +35,7 @@ class ImageBox extends Component {
               user.image ||
               "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
             }
+            alt={user.name}
           />
           <div className="co-name">
             <Link to="/" onClick={(e)=>{
@@ -62,7 +63,7 @@ class ImageBox extends Component {
         </div>
 
         <div className="reference">
-          {image ? <img className="reference-thumb" src={image} /> : ""}
+          {image ? <img className="reference-thumb" alt="imga" src={image} /> : ""}
           {video ? (
             <video
               style={{ width: `100%` }}

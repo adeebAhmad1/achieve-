@@ -11,13 +11,12 @@ const SideBar = ({user:{image,name,uid} ,email ,chat , users,history,}) => {
         const chatUsers = chat.users;
         const reciver = chatUsers.find(el=> el !== uid);
         const {message , time,uid: senderId} = chat.chatting[chat.chatting.length -1];
-        return <UserChat link={`/inbox/${reciver}`} style={!chat.read && senderId === reciver ? "boldChat" : ""} message={message} person={user.name} time={new Date(time).toLocaleTimeString() + " " + new Date(time).toLocaleDateString() } key={i}/>
+        return <UserChat link={`/inbox/${reciver}`} style={!chat.read && senderId === reciver ? "boldChat" : ""} message={message} person={user.name} time={ new Date(time).toLocaleTimeString() + " " + new Date(time).toLocaleDateString() } key={i}/>
       })
     }
   }
   return (
     <div className="messages">
-      <Link to="/" className="material-icons" style={{position: `absolute`,left: `10px`}}>arrow_back</Link>
       <div className="profile">
         {image ? (
           <UserImage

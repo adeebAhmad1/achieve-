@@ -94,7 +94,7 @@ class Signup extends Component {
                 className="login100-form validate-form"
               >
                 <span className="login100-form-title p-b-70">
-                  Welcome on Acheve Church  Plus Sign Up
+                  Welcome on Social Feed
                 </span>
                 <div className="row p-t-0">
                   <div className="col l6 s12">

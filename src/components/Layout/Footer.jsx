@@ -8,11 +8,11 @@ const Footer = (props) => {
     })
   }
   return (
-    <footer className="page-footer green darken-1">
+    <footer className="page-footer" style={{backgroundColor: `#2998ff`}}>
           <div className="container">
             <div className="row">
               <div className="col l6 s12">
-                <h5 className="white-text">Acheve Church  Plus</h5>
+                <h5 className="white-text">Social Feed</h5>
               </div>
               <div className="col l4 offset-l2 s12">
                 <h5 className="white-text">Links</h5>
@@ -22,7 +22,7 @@ const Footer = (props) => {
               </div>
             </div>
           </div>
-          <div className="footer-copyright green darken-3">
+          <div className="footer-copyright center"style={{backgroundColor: `#11aaff`}}>
             <div className="container">
             © {new Date().getFullYear()} All rights reserved
             </div>

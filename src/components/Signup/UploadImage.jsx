@@ -54,7 +54,7 @@ class UploadImage extends Component {
       <form onSubmit={this.onSubmit} className="uploadImage">
         <div className="container">
           <h1>
-            Acheve Church  Plus<small>Upload Image</small>
+          Social Feed<small>Upload Image</small>
           </h1>
           <div className="avatar-upload">
             <div className="avatar-edit">

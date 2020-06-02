@@ -57,7 +57,7 @@ class Login extends Component {
                 className="login100-form validate-form"
               >
                 <span className="login100-form-title">
-                  Welcome on Acheve Church  Plus Log In
+                  Welcome on Social Feed
                 </span>
                 <div
                   className="wrap-input100 validate-input"

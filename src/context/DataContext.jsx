@@ -1,7 +1,6 @@
 import React, { Component,createContext } from 'react'
 import { db } from '../config/firebase';
 import { AuthContext } from './AuthContext';
-import { Toast } from 'materialize-css';
 export const DataContext = createContext()
 class DataContextProvider extends Component {
   static contextType = AuthContext;

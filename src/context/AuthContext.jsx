@@ -1,5 +1,5 @@
 import React, { Component, createContext } from "react";
-import firebase, { db } from "../config/firebase";
+import firebase from "../config/firebase";
 
 export const AuthContext = createContext();
 
@@ -13,7 +13,6 @@ export default class AuthContextProvider extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ isAuth: true, user: user });
-        console.log(user)
         console.log('logged in');
       } else {
         this.setState({ isAuth: false, user: {} });
